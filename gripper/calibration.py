@@ -95,21 +95,38 @@ while joystick_clicked_times < 3:
 
             if joystick_clicked_times == 0:
                 kit.motor1.throttle = 0.30
+                motor1_encoderA_val = GPIO.input(MOTOR1_ENCODER_PIN_A)
+                motor1_encoderB_val = GPIO.input(MOTOR1_ENCODER_PIN_B)   
+                if motor1_encoderA_val != motor1_encoderA_last:
+                    count += 1
+                    motor1_encoderA_last = motor1_encoderA_val
+                if motor1_encoderB_val != motor1_encoderB_last:
+                    count += 1
+                    motor1_encoderB_last = motor1_encoderB_val
             
             if joystick_clicked_times == 1:
                 kit.motor2.throttle = 0.30
+                motor2_encoderA_val = GPIO.input(MOTOR2_ENCODER_PIN_A)
+                motor2_encoderB_val = GPIO.input(MOTOR2_ENCODER_PIN_B)   
+                if motor2_encoderA_val != motor2_encoderA_last:
+                    count += 1
+                    motor2_encoderA_last = motor2_encoderA_val
+                if motor2_encoderB_val != motor2_encoderB_last:
+                    count += 1
+                    motor2_encoderB_last = motor2_encoderB_val
 
             if joystick_clicked_times == 2:
                 kit.motor3.throttle = 0.30
+                motor3_encoderA_val = GPIO.input(MOTOR3_ENCODER_PIN_A)
+                motor3_encoderB_val = GPIO.input(MOTOR3_ENCODER_PIN_B)   
+                if motor3_encoderA_val != motor3_encoderA_last:
+                    count += 1
+                    motor3_encoderA_last = motor3_encoderA_val
+                if motor3_encoderB_val != motor3_encoderB_last:
+                    count += 1
+                    motor3_encoderB_last = motor3_encoderB_val
             
-            motor1_encoderA_val = GPIO.input(MOTOR1_ENCODER_PIN_A)
-            motor1_encoderB_val = GPIO.input(MOTOR1_ENCODER_PIN_B)   
-            if motor1_encoderA_val != motor1_encoderA_last:
-                count += 1
-                motor1_encoderA_last = motor1_encoderA_val
-            if motor1_encoderB_val != motor1_encoderB_last:
-                count += 1
-                motor1_encoderB_last = motor1_encoderB_val
+            
         
         kit.motor1.throttle = 0.0
         kit.motor2.throttle = 0.0
