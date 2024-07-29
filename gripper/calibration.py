@@ -70,7 +70,7 @@ time.sleep(1)
 print('Starting calibration now. Click joystick button when tendon has fully contracted.')
 
 joystick_clicked_times = 0
-desired = 400 # hardcoded offset value to revert to relaxed tendons
+desired = 100 # hardcoded offset value to revert to relaxed tendons
 count = 0
 
 while joystick_clicked_times < 3:
