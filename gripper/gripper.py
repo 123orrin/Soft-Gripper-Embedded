@@ -15,7 +15,7 @@ MOTOR3_ENCODER_PIN_A = 16
 MOTOR3_ENCODER_PIN_B = 19
 
 # Set Joystick Pins
-JOY_BUTTON_PIN = 21
+JOY_BUTTON_PIN = 18
 
 # Create the I2C bus
 i2c = busio.I2C(board.SCL, board.SDA)
