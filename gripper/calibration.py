@@ -76,20 +76,20 @@ count = 0
 while joystick_clicked_times < 3:
     
     if joystick_clicked_times == 0:
-        kit.motor1.throttle = 0.30
+        kit.motor1.throttle = 0.15
 
     if joystick_clicked_times == 1:
-        kit.motor2.throttle = 0.30
+        kit.motor2.throttle = 0.15
 
     if joystick_clicked_times == 2:
-        kit.motor3.throttle = 0.30
+        kit.motor3.throttle = 0.15
 
     # get joystick click event
     if GPIO.input(JOY_BUTTON_PIN):
 
         while count < desired:
             print(count)
-            
+
             if joystick_clicked_times == 0:
                 kit.motor1.throttle = -0.30
             
