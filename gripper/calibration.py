@@ -52,12 +52,14 @@ kit.motor2.throttle = 0
 kit.motor3.throttle = 0
 
 count = 0
-
 desired = 0
 
 motor1_encoderA_last = None
+motor1_encoderB_last = None
 motor2_encoderA_last = None
+motor2_encoderB_last = None
 motor3_encoderA_last = None
+motor3_encoderB_last = None
 
 print('Starting calibration in 3 seconds')
 time.sleep(1)
@@ -68,7 +70,7 @@ time.sleep(1)
 print('Starting calibration now. Click joystick button when tendon has fully contracted.')
 
 joystick_clicked_times = 0
-desired = 800 # hardcoded offset value to revert to relaxed tendons
+desired = 400 # hardcoded offset value to revert to relaxed tendons
 count = 0
 
 while joystick_clicked_times < 3:
@@ -98,7 +100,14 @@ while joystick_clicked_times < 3:
             if joystick_clicked_times == 2:
                 kit.motor3.throttle = -0.30
             
-            count += 1
+            motor1_encoderA_val = GPIO.input(MOTOR1_ENCODER_PIN_A)
+            motor1_encoderB_val = GPIO.input(MOTOR1_ENCODER_PIN_B)   
+            if motor1_encoderA_val != motor1_encoderA_last:
+                count += 1
+                motor1_encoderA_last = motor1_encoderA_val
+            if motor1_encoderB_val != motor1_encoderB_last:
+                count += 1
+                motor1_encoderB_last = motor1_encoderB_val
 
         count = 0
         joystick_clicked_times += 1
