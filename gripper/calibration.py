@@ -23,9 +23,6 @@ i2c = busio.I2C(board.SCL, board.SDA)
 # Create Motor Object
 kit = MotorKit(i2c=i2c)
 
-# Give 12V power to encoders
-kit.motor4.throttle = 1
-
 # Create the ADC object 
 ads = ADS.ADS1115(i2c, gain=2/3, address=0x48)
 # Create single-ended input on channel 0

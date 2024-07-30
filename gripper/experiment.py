@@ -53,7 +53,10 @@ motor1_encoder_count = 0
 motor2_encoder_count = 0
 motor3_encoder_count = 0
 
-desired = 0
+
+# Amount to pull in encoder counts
+# 400 counts is one full turn of the main shaft
+desired = 400
 motor1_encoder_desired = 0
 motor1_encoder_desired = 0
 motor1_encoder_desired = 0
@@ -68,44 +71,37 @@ motor3_encoderB_last = None
 while True:
     chan0_val = chan0.value
     chan1_val = chan1.value
-    
-    if chan0_val < 5000:
-        desired -= 10
-    elif chan0_val > 20000:
-        desired += 10
         
     control_start = time.time()
     time_in_loop = 0
-    if count < desired:
-        while count < desired and time_in_loop < loop_timeout:
-            kit.motor1.throttle = 0.30
-            kit.motor2.throttle = 0.30
-            kit.motor3.throttle = 0.30
+    while count < desired:
+        kit.motor1.throttle = -0.30
+        kit.motor2.throttle = -0.30
+        kit.motor3.throttle = -0.30
 
-            motor1_encoderA_val = GPIO.input(MOTOR1_ENCODER_PIN_A)
-            motor1_encoderB_val = GPIO.input(MOTOR1_ENCODER_PIN_B)   
-            if motor1_encoderA_val != motor1_encoderA_last:
-                count += 1
-                motor1_encoderA_last = motor1_encoderA_val
-            if motor1_encoderB_val != motor1_encoderB_last:
-                count += 1
-                motor1_encoderB_last = motor1_encoderB_val
-            time_in_loop = time.time() - control_start
+        motor1_encoderA_val = GPIO.input(MOTOR1_ENCODER_PIN_A)
+        motor1_encoderB_val = GPIO.input(MOTOR1_ENCODER_PIN_B)   
+        if motor1_encoderA_val != motor1_encoderA_last:
+            count += 1
+            motor1_encoderA_last = motor1_encoderA_val
+        if motor1_encoderB_val != motor1_encoderB_last:
+            count += 1
+            motor1_encoderB_last = motor1_encoderB_val
+
+    time.sleep(5)
                         
-    elif count > desired and time_in_loop < loop_timeout:
-        while count > desired:
-            kit.motor1.throttle = -0.30
-            kit.motor2.throttle = -0.30
-            kit.motor3.throttle = -0.30
-            motor1_encoderA_val = GPIO.input(MOTOR1_ENCODER_PIN_A)
-            motor1_encoderB_val = GPIO.input(MOTOR1_ENCODER_PIN_B)   
-            if motor1_encoderA_val != motor1_encoderA_last:
-                count -= 1
-                motor1_encoderA_last = motor1_encoderA_val
-            if motor1_encoderB_val != motor1_encoderB_last:
-                count -= 1
-                motor1_encoderB_last = motor1_encoderB_val
-            time_in_loop = time.time() - control_start
+    while count > 0:
+        kit.motor1.throttle = 0.30
+        kit.motor2.throttle = 0.30
+        kit.motor3.throttle = 0.30
+        motor1_encoderA_val = GPIO.input(MOTOR1_ENCODER_PIN_A)
+        motor1_encoderB_val = GPIO.input(MOTOR1_ENCODER_PIN_B)   
+        if motor1_encoderA_val != motor1_encoderA_last:
+            count -= 1
+            motor1_encoderA_last = motor1_encoderA_val
+        if motor1_encoderB_val != motor1_encoderB_last:
+            count -= 1
+            motor1_encoderB_last = motor1_encoderB_val
 
                 
     kit.motor1.throttle = 0
